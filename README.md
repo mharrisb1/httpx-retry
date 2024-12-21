@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="350" height="208" src="https://raw.githubusercontent.com/mharrisb1/httpx-retry/main/docs/img/httpx-retry.png" alt='RESPX'>
+  <img width="166" height="208" src="https://raw.githubusercontent.com/mharrisb1/httpx-retry/main/docs/img/httpx-retry.png" alt='RESPX'>
 </p>
 <p align="center">
   <strong>HTTPX Retry</strong> <em>- Middleware for implementing retry strategies with HTTPX</em>
