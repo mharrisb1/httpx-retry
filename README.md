@@ -7,6 +7,9 @@
 
 ---
 
+> [!WARNING]
+> Under development
+
 ## Usage
 
 Retries are defined at the transport layer so that they can apply to all requests from the client.
