@@ -54,20 +54,20 @@ class RetryPolicy(BaseRetryPolicy):
 
         return self
 
-    def with_min_delay(self, ms: float) -> "RetryPolicy":
-        self._initial_delay = ms
+    def with_min_delay(self, seconds: float) -> "RetryPolicy":
+        self._initial_delay = seconds
         return self
 
-    def with_max_delay(self, ms: float) -> "RetryPolicy":
-        self._max_delay = ms
+    def with_max_delay(self, seconds: float) -> "RetryPolicy":
+        self._max_delay = seconds
         return self
 
     def with_delay_func(self, func: Callable[[int], float]) -> "RetryPolicy":
         self._delay_func = func
         return self
 
-    def with_timeout(self, ms: float) -> "RetryPolicy":
-        self._timeout = ms
+    def with_timeout(self, seconds: float) -> "RetryPolicy":
+        self._timeout = seconds
         return self
 
     def with_multiplier(self, multiplier: float) -> "RetryPolicy":
@@ -86,8 +86,8 @@ class RetryPolicy(BaseRetryPolicy):
         self._adaptive_func = func
         return self
 
-    def set_adaptive_delay(self, ms: float) -> None:
-        self._adaptive_delay = ms
+    def set_adaptive_delay(self, seconds: float) -> None:
+        self._adaptive_delay = seconds
 
     def should_retry(
         self,
