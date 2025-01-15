@@ -5,7 +5,6 @@ from typing import Any, Awaitable, Callable, Optional
 from httpx import Response
 
 from .policies.base import BaseRetryPolicy
-from .utils.time import seconds
 
 
 class RetryExecutor:
@@ -39,7 +38,7 @@ class RetryExecutor:
                     return response
 
             delay = self.policy.get_delay(attempt)
-            time.sleep(seconds(delay))
+            time.sleep(delay)
 
             attempt += 1
 
@@ -88,7 +87,7 @@ class AsyncRetryExecutor:
                     return response
 
             delay = self.policy.get_delay(attempt)
-            await asyncio.sleep(seconds(delay))
+            await asyncio.sleep(delay)
 
             attempt += 1
 

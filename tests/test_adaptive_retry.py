@@ -23,9 +23,7 @@ def adaptive_adjustment(
         retry_after = response.headers.get("Retry-After")
         if retry_after:
             with contextlib.suppress(Exception):
-                # NOTE: `Retry-After` should be in seconds so we need to adjust
-                #       https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Retry-After
-                policy.set_adaptive_delay(float(retry_after) * 1e3)
+                policy.set_adaptive_delay(float(retry_after))
 
 
 @respx.mock()
@@ -39,7 +37,7 @@ def test_adaptive_retry_with_retry_after(respx_mock: respx.MockRouter):
     adaptive_policy = (
         RetryPolicy()
         .with_attempts(2)
-        .with_delay(50)
+        .with_delay(0.05)
         .with_multiplier(2)
         .with_retry_on([500])
         .with_adaptive_func(adaptive_adjustment)
@@ -69,7 +67,7 @@ async def test_async_adaptive_retry_with_retry_after(respx_mock: respx.MockRoute
     adaptive_policy = (
         RetryPolicy()
         .with_attempts(2)
-        .with_delay(50)
+        .with_delay(0.05)
         .with_multiplier(2)
         .with_retry_on([500])
         .with_adaptive_func(adaptive_adjustment)
@@ -84,6 +82,6 @@ async def test_async_adaptive_retry_with_retry_after(respx_mock: respx.MockRoute
     end = time.monotonic()
 
     elapsed = end - start
-    assert elapsed >= 0.005
+    assert elapsed >= 0.01
 
     assert route.call_count == 2

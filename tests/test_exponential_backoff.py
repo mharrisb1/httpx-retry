@@ -22,7 +22,7 @@ def test_exponential_backoff(respx_mock: respx.MockRouter):
     ]
 
     exponential_retry = (
-        RetryPolicy().with_attempts(3).with_min_delay(100).with_multiplier(2)
+        RetryPolicy().with_attempts(3).with_min_delay(0.1).with_multiplier(2)
     )
 
     start = time.monotonic()
@@ -32,7 +32,7 @@ def test_exponential_backoff(respx_mock: respx.MockRouter):
     end = time.monotonic()
 
     elapsed = end - start
-    assert elapsed >= 0.29
+    assert elapsed >= 0.3
 
     assert route.call_count == 3
 
@@ -48,7 +48,7 @@ async def test_async_exponential_backoff(respx_mock: respx.MockRouter):
     ]
 
     exponential_retry = (
-        RetryPolicy().with_attempts(3).with_min_delay(100).with_multiplier(2)
+        RetryPolicy().with_attempts(3).with_min_delay(0.1).with_multiplier(2)
     )
 
     start = time.monotonic()
@@ -60,6 +60,6 @@ async def test_async_exponential_backoff(respx_mock: respx.MockRouter):
     end = time.monotonic()
 
     elapsed = end - start
-    assert elapsed >= 0.29
+    assert elapsed >= 0.3
 
     assert route.call_count == 3

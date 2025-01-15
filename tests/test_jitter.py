@@ -29,7 +29,7 @@ def test_exponential_backoff_with_jitter(respx_mock: respx.MockRouter):
     ]
 
     jitter_retry = (
-        RetryPolicy().with_attempts(3).with_delay_func(exponential_jitter_delay(100, 2))
+        RetryPolicy().with_attempts(3).with_delay_func(exponential_jitter_delay(0.1, 2))
     )
 
     with httpx.Client(transport=HTTPRetryTransport(policy=jitter_retry)) as client:
@@ -50,7 +50,7 @@ async def test_async_exponential_backoff_with_jitter(respx_mock: respx.MockRoute
     ]
 
     jitter_retry = (
-        RetryPolicy().with_attempts(3).with_delay_func(exponential_jitter_delay(100, 2))
+        RetryPolicy().with_attempts(3).with_delay_func(exponential_jitter_delay(0.1, 2))
     )
 
     async with httpx.AsyncClient(

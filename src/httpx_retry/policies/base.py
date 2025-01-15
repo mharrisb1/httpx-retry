@@ -21,7 +21,7 @@ class BaseRetryPolicy(ABC):
     @abstractmethod
     def get_delay(self, attempt: int) -> float:
         """
-        Calculate the delay (ms) before the next retry attempt,
+        Calculate the delay (seconds) before the next retry attempt,
         based on the current attempt number or other policy parameters.
         """
         ...
@@ -29,6 +29,6 @@ class BaseRetryPolicy(ABC):
     @abstractmethod
     def get_timeout(self) -> Optional[float]:
         """
-        Get timeout (ms)
+        Get timeout (seconds)
         """
         ...
