@@ -2,51 +2,43 @@
   <img width="166" height="208" src="https://raw.githubusercontent.com/mharrisb1/httpx-retry/main/docs/img/httpx-retry.png" alt='RESPX'>
 </p>
 <p align="center">
-  <strong>HTTPX Retry</strong> <em>- Middleware for implementing retry strategies with HTTPX</em>
+  <strong>HTTPX Retry</strong> <em>- Middleware for implementing retry policies with HTTPX</em>
 </p>
 
 ---
 
-> [!WARNING]
-> Under development
-
 ## Usage
 
-Retries are defined at the transport layer so that they can apply to all requests from the client.
+Retries are defined at the transport layer.
 
-```py
+```python
 import httpx
 
-from httpx_retry import RetryTransport
-from httpx_retry.strategies import ExponentialBackoff
+from httpx_retry import HTTPRetryTransport, RetryPolicy
 
-client = httpx.Client(
-    transport=RetryTransport(
-        strategy=ExponentialBackoff(
-          min_delay=2,
-          max_delay=30,
-          multiplier=2,
-          max_attempts=5,
-          timeout=60,
-          retry_on: [500, 502, 503, 504],
-        )
-    )
+exponential_retry = (
+    RetryPolicy()
+      .with_attempts(3)
+      .with_min_delay(100)
+      .with_multiplier(2)
 )
+
+client = httpx.Client(transport=HTTPRetryTransport(policy=exponential_retry))
+res = client.get("https://example.com")
 ```
 
-## Strategies
+## Examples
 
-| Name                 | Description                                                                                |
-| -------------------- | ------------------------------------------------------------------------------------------ |
-| `ExponentialBackoff` | Time between retries increases exponentially with each attempt. Allows optional jitter.    |
-| `LinearBackoff`      | Delay increases linearly with each retry.                                                  |
-| `FixedInterval`      | Delay between retries is constant and does not change.                                     |
-| `FibonacciBackoff`   | Delay follows the Fibonacci sequence (1s, 1s, 2s, 3s, 5s, etc.).                           |
-| `RetryBudget`        | Limits retries based on a fixed budget to prevent excessive retries in a given time frame. |
-| `AdaptiveRetry`      | Dynamically adjusts retry behavior based on system conditions or server feedback.          |
+There are examples of implementing common retry policies in [`/tests`](./tests)
 
-> [!NOTE]  
-> Please help by contributing more strategies
+- [Adaptive Retry](./tests/test_adaptive_retry.py)
+- [Circui Breaker](./tests/test_circuit_breaker.py)
+- [Exponential Backoff](./tests/test_exponential_backoff.py)
+- [Fibonacci Backoff](./tests/test_fibonacci_backoff.py)
+- [Fixed Delay](./tests/test_fixed_delay.py)
+- [Immediate Retry](./tests/test_immediate_retry.py)
+- [Jitter](./tests/test_jitter.py)
+- [Linear Backoff](./tests/test_linear_backoff.py)
 
 ## Installation
 
@@ -59,10 +51,6 @@ Available in [PyPI](https://pypi.org/project/httpx-retry)
 ```sh
 pip install httpx-retry
 ```
-
-## Documentation
-
-<!-- TODO -->
 
 ## License
 
