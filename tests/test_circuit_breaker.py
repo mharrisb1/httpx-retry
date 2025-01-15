@@ -16,7 +16,7 @@ from httpx_retry.policies.base import BaseRetryPolicy
 
 
 class CircuitBreakerPolicy(BaseRetryPolicy):
-    def __init__(self):
+    def __init__(self) -> None:
         self._failure_threshold = 3
         self._recovery_timeout = 60.0
         self._success_threshold = 1
