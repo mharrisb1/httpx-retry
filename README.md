@@ -21,6 +21,7 @@ exponential_retry = (
       .with_attempts(3)
       .with_min_delay(100)
       .with_multiplier(2)
+      .with_retry_on(lambda code: code >= 500)
 )
 
 client = httpx.Client(transport=HTTPRetryTransport(policy=exponential_retry))
