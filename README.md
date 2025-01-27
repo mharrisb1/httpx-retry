@@ -14,7 +14,7 @@ Retries are defined at the transport layer.
 ```python
 import httpx
 
-from httpx_retry import HTTPRetryTransport, RetryPolicy
+from httpx_retry import RetryTransport, RetryPolicy
 
 exponential_retry = (
     RetryPolicy()
@@ -24,7 +24,7 @@ exponential_retry = (
       .with_retry_on(lambda code: code >= 500)
 )
 
-client = httpx.Client(transport=HTTPRetryTransport(policy=exponential_retry))
+client = httpx.Client(transport=RetryTransport(policy=exponential_retry))
 res = client.get("https://example.com")
 ```
 
