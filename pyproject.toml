@@ -1,11 +1,12 @@
 [tool.poetry]
 name = "httpx-retry"
-version = "0.1.0"
+version = "0.2.0"
 description = "Middleware for implementing retry policies with HTTPX"
 authors = ["Michael Harris <mharris@definite.app>"]
 readme = "README.md"
 repository = "https://github.com/mharrisb1/httpx-retry"
 homepage = "https://github.com/mharrisb1/httpx-retry"
+license = "MIT"
 documentation = "https://github.com/mharrisb1/httpx-retry"
 keywords = ["httpx", "retry"]
 packages = [{ include = "httpx_retry", from = "src" }]
