@@ -11,7 +11,7 @@ import httpx
 import pytest
 import respx
 
-from httpx_retry import AsyncHTTPRetryTransport, HTTPRetryTransport
+from httpx_retry import AsyncRetryTransport, RetryTransport
 from httpx_retry.policies.base import BaseRetryPolicy
 
 
@@ -84,7 +84,7 @@ def test_circuit_breaker(respx_mock: respx.MockRouter):
         CircuitBreakerPolicy().with_failure_threshold(3).with_recovery_timeout(60)
     )
 
-    with httpx.Client(transport=HTTPRetryTransport(policy=circuit_breaker)) as client:  # noqa: SIM117
+    with httpx.Client(transport=RetryTransport(policy=circuit_breaker)) as client:  # noqa: SIM117
         with contextlib.suppress(Exception):
             client.get("https://example.com")
 
@@ -107,7 +107,7 @@ async def test_async_circuit_breaker(respx_mock: respx.MockRouter):
     )
 
     async with httpx.AsyncClient(
-        transport=AsyncHTTPRetryTransport(policy=circuit_breaker)
+        transport=AsyncRetryTransport(policy=circuit_breaker)
     ) as client:
         with contextlib.suppress(Exception):
             await client.get("https://example.com")

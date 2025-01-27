@@ -9,7 +9,7 @@ import httpx
 import pytest
 import respx
 
-from httpx_retry import AsyncHTTPRetryTransport, HTTPRetryTransport, RetryPolicy
+from httpx_retry import AsyncRetryTransport, RetryPolicy, RetryTransport
 
 
 @respx.mock()
@@ -26,7 +26,7 @@ def test_exponential_backoff(respx_mock: respx.MockRouter):
     )
 
     start = time.monotonic()
-    with httpx.Client(transport=HTTPRetryTransport(policy=exponential_retry)) as client:
+    with httpx.Client(transport=RetryTransport(policy=exponential_retry)) as client:
         res = client.get("https://example.com")
         assert res.status_code == 200
     end = time.monotonic()
@@ -53,7 +53,7 @@ async def test_async_exponential_backoff(respx_mock: respx.MockRouter):
 
     start = time.monotonic()
     async with httpx.AsyncClient(
-        transport=AsyncHTTPRetryTransport(policy=exponential_retry)
+        transport=AsyncRetryTransport(policy=exponential_retry)
     ) as client:
         res = await client.get("https://example.com")
         assert res.status_code == 200

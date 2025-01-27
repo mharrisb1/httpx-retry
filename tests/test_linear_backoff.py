@@ -10,7 +10,7 @@ import httpx
 import pytest
 import respx
 
-from httpx_retry import AsyncHTTPRetryTransport, HTTPRetryTransport, RetryPolicy
+from httpx_retry import AsyncRetryTransport, RetryPolicy, RetryTransport
 
 
 def linear_delay(initial_delay: float, increment: float) -> Callable[[int], float]:
@@ -29,7 +29,7 @@ def test_linear_backoff(respx_mock: respx.MockRouter):
     linear_retry = RetryPolicy().with_attempts(3).with_delay(linear_delay(0.1, 0.1))
 
     start = time.monotonic()
-    with httpx.Client(transport=HTTPRetryTransport(policy=linear_retry)) as client:
+    with httpx.Client(transport=RetryTransport(policy=linear_retry)) as client:
         res = client.get("https://example.com")
         assert res.status_code == 200
     end = time.monotonic()
@@ -54,7 +54,7 @@ async def test_async_linear_backoff(respx_mock: respx.MockRouter):
 
     start = time.monotonic()
     async with httpx.AsyncClient(
-        transport=AsyncHTTPRetryTransport(policy=linear_retry)
+        transport=AsyncRetryTransport(policy=linear_retry)
     ) as client:
         res = await client.get("https://example.com")
         assert res.status_code == 200

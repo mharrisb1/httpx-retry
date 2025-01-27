@@ -10,7 +10,7 @@ import httpx
 import pytest
 import respx
 
-from httpx_retry import AsyncHTTPRetryTransport, HTTPRetryTransport, RetryPolicy
+from httpx_retry import AsyncRetryTransport, RetryPolicy, RetryTransport
 
 
 def adaptive_adjustment(
@@ -44,7 +44,7 @@ def test_adaptive_retry_with_retry_after(respx_mock: respx.MockRouter):
     )
 
     start = time.monotonic()
-    with httpx.Client(transport=HTTPRetryTransport(policy=adaptive_policy)) as client:
+    with httpx.Client(transport=RetryTransport(policy=adaptive_policy)) as client:
         response = client.get("https://example.com")
         assert response.status_code == 200
     end = time.monotonic()
@@ -75,7 +75,7 @@ async def test_async_adaptive_retry_with_retry_after(respx_mock: respx.MockRoute
 
     start = time.monotonic()
     async with httpx.AsyncClient(
-        transport=AsyncHTTPRetryTransport(policy=adaptive_policy)
+        transport=AsyncRetryTransport(policy=adaptive_policy)
     ) as client:
         response = await client.get("https://example.com")
         assert response.status_code == 200

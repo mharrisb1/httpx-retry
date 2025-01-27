@@ -10,7 +10,7 @@ import httpx
 import pytest
 import respx
 
-from httpx_retry import AsyncHTTPRetryTransport, HTTPRetryTransport, RetryPolicy
+from httpx_retry import AsyncRetryTransport, RetryPolicy, RetryTransport
 
 
 def exponential_jitter_delay(
@@ -32,7 +32,7 @@ def test_exponential_backoff_with_jitter(respx_mock: respx.MockRouter):
         RetryPolicy().with_attempts(3).with_delay_func(exponential_jitter_delay(0.1, 2))
     )
 
-    with httpx.Client(transport=HTTPRetryTransport(policy=jitter_retry)) as client:
+    with httpx.Client(transport=RetryTransport(policy=jitter_retry)) as client:
         res = client.get("https://example.com")
         assert res.status_code == 200
 
@@ -54,7 +54,7 @@ async def test_async_exponential_backoff_with_jitter(respx_mock: respx.MockRoute
     )
 
     async with httpx.AsyncClient(
-        transport=AsyncHTTPRetryTransport(policy=jitter_retry)
+        transport=AsyncRetryTransport(policy=jitter_retry)
     ) as client:
         res = await client.get("https://example.com")
         assert res.status_code == 200

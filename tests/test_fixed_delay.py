@@ -7,8 +7,7 @@ import httpx
 import pytest
 import respx
 
-from httpx_retry import HTTPRetryTransport, RetryPolicy
-from httpx_retry.transports import AsyncHTTPRetryTransport
+from httpx_retry import AsyncRetryTransport, RetryPolicy, RetryTransport
 
 
 @respx.mock()
@@ -22,7 +21,7 @@ def test_fixed_delay(respx_mock: respx.MockRouter):
 
     immediate_retry = RetryPolicy().with_attempts(3).with_delay(0.5)
 
-    with httpx.Client(transport=HTTPRetryTransport(policy=immediate_retry)) as client:
+    with httpx.Client(transport=RetryTransport(policy=immediate_retry)) as client:
         res = client.get("https://example.com")
         assert res.status_code == 200
 
@@ -42,7 +41,7 @@ async def test_async_fixed_delay(respx_mock: respx.MockRouter):
     immediate_retry = RetryPolicy().with_attempts(3).with_delay(0.5)
 
     async with httpx.AsyncClient(
-        transport=AsyncHTTPRetryTransport(policy=immediate_retry)
+        transport=AsyncRetryTransport(policy=immediate_retry)
     ) as client:
         res = await client.get("https://example.com")
         assert res.status_code == 200
