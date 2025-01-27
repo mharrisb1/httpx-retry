@@ -33,7 +33,7 @@ res = client.get("https://example.com")
 There are examples of implementing common retry policies in [`/tests`](./tests)
 
 - [Adaptive Retry](./tests/test_adaptive_retry.py)
-- [Circui Breaker](./tests/test_circuit_breaker.py)
+- [Circuit Breaker](./tests/test_circuit_breaker.py)
 - [Exponential Backoff](./tests/test_exponential_backoff.py)
 - [Fibonacci Backoff](./tests/test_fibonacci_backoff.py)
 - [Fixed Delay](./tests/test_fixed_delay.py)
