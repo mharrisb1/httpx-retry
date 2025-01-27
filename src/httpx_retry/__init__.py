@@ -1,4 +1,4 @@
 from .policies import RetryPolicy
-from .transports import AsyncHTTPRetryTransport, HTTPRetryTransport
+from .transports import AsyncRetryTransport, RetryTransport
 
-__all__ = ["HTTPRetryTransport", "AsyncHTTPRetryTransport", "RetryPolicy"]
+__all__ = ["RetryTransport", "AsyncRetryTransport", "RetryPolicy"]
