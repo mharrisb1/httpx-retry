@@ -10,7 +10,7 @@ import httpx
 import pytest
 import respx
 
-from httpx_retry import AsyncHTTPRetryTransport, HTTPRetryTransport, RetryPolicy
+from httpx_retry import AsyncRetryTransport, RetryPolicy, RetryTransport
 
 
 def fibonacci_delay(initial_delay: float) -> Callable[[int], float]:
@@ -35,7 +35,7 @@ def test_fibonacci_backoff(respx_mock: respx.MockRouter):
     fibonacci_retry = RetryPolicy().with_attempts(3).with_delay(fibonacci_delay(0.1))
 
     start = time.monotonic()
-    with httpx.Client(transport=HTTPRetryTransport(policy=fibonacci_retry)) as client:
+    with httpx.Client(transport=RetryTransport(policy=fibonacci_retry)) as client:
         res = client.get("https://example.com")
         assert res.status_code == 200
     end = time.monotonic()
@@ -60,7 +60,7 @@ async def test_async_fibonacci_backoff(respx_mock: respx.MockRouter):
 
     start = time.monotonic()
     async with httpx.AsyncClient(
-        transport=AsyncHTTPRetryTransport(policy=fibonacci_retry)
+        transport=AsyncRetryTransport(policy=fibonacci_retry)
     ) as client:
         res = await client.get("https://example.com")
         assert res.status_code == 200

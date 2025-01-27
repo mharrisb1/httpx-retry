@@ -4,12 +4,13 @@ from typing import Any, Awaitable, Callable, Optional
 
 from httpx import Response
 
+from .policies import RetryPolicy
 from .policies.base import BaseRetryPolicy
 
 
 class RetryExecutor:
-    def __init__(self, policy: BaseRetryPolicy) -> None:
-        self.policy = policy
+    def __init__(self, policy: Optional[BaseRetryPolicy] = None) -> None:
+        self.policy = policy or RetryPolicy()
 
     def execute(
         self, func: Callable[..., Response], *args: Any, **kwargs: Any
@@ -54,8 +55,8 @@ class RetryExecutor:
 
 
 class AsyncRetryExecutor:
-    def __init__(self, policy: BaseRetryPolicy) -> None:
-        self.policy = policy
+    def __init__(self, policy: Optional[BaseRetryPolicy] = None) -> None:
+        self.policy = policy or RetryPolicy()
 
     async def execute(
         self,
