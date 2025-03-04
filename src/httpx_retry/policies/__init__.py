@@ -22,23 +22,23 @@ class AdapativePolicyFn(Protocol[PolicyT]):
 class RetryPolicy(BaseRetryPolicy):
     def __init__(
         self,
-        attempts: Optional[int] = None,
-        initial_delay: Optional[float] = None,
+        attempts: int = 1,
+        initial_delay: float = 0.0,
         max_delay: Optional[float] = None,
         delay_func: Optional[Callable[[int], float]] = None,
         timeout: Optional[float] = None,
-        multiplier: Optional[float] = None,
-        retry_on: Optional[Union[list[int], Callable[[int], bool]]] = None,
+        multiplier: float = 1.0,
+        retry_on: Optional[Union[list[int], Callable[[int], bool]]] = (lambda code: code >= 400),
         adaptive_func: Optional[AdapativePolicyFn["RetryPolicy"]] = None,
         adaptive_delay: Optional[float] = None,
     ) -> None:
-        self._attempts = attempts or 1
-        self._initial_delay = initial_delay or 0.0
+        self._attempts = attempts
+        self._initial_delay = initial_delay
         self._max_delay = max_delay
         self._delay_func = delay_func
         self._timeout = timeout
-        self._multiplier = multiplier or 1.0
-        self._retry_on = retry_on or (lambda code: code >= 400)
+        self._multiplier = multiplier
+        self._retry_on = retry_on
         self._adaptive_func = adaptive_func
         self._adaptive_delay = adaptive_delay
 
