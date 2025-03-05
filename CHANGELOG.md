@@ -1,5 +1,19 @@
 # Changelog
 
+# v0.3.0
+
+> [!WARNING]
+> Breaking change to API. Expect more as library matures.
+
+Pull Requests:
+
+- [#8: fix(policy): rename `attempts` to `max_retries` for clarity](https://github.com/mharrisb1/httpx-retry/issues/8)
+- [#7: fix: RetryPolicy can handle zero retries ](https://github.com/mharrisb1/httpx-retry/issues/7)
+
+Issues:
+
+- [#5: Bug: can not handle zero attempts](https://github.com/mharrisb1/httpx-retry/issues/5)
+
 # v0.2.1
 
 Pull Requests:
