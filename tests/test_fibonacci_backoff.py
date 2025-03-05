@@ -32,7 +32,7 @@ def test_fibonacci_backoff(respx_mock: respx.MockRouter):
         httpx.Response(200),
     ]
 
-    fibonacci_retry = RetryPolicy().with_attempts(3).with_delay(fibonacci_delay(0.1))
+    fibonacci_retry = RetryPolicy().with_max_retries(3).with_delay(fibonacci_delay(0.1))
 
     start = time.monotonic()
     with httpx.Client(transport=RetryTransport(policy=fibonacci_retry)) as client:
@@ -56,7 +56,7 @@ async def test_async_fibonacci_backoff(respx_mock: respx.MockRouter):
         httpx.Response(200),
     ]
 
-    fibonacci_retry = RetryPolicy().with_attempts(3).with_delay(fibonacci_delay(0.1))
+    fibonacci_retry = RetryPolicy().with_max_retries(3).with_delay(fibonacci_delay(0.1))
 
     start = time.monotonic()
     async with httpx.AsyncClient(

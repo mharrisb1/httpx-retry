@@ -36,7 +36,7 @@ def test_adaptive_retry_with_retry_after(respx_mock: respx.MockRouter):
 
     adaptive_policy = (
         RetryPolicy()
-        .with_attempts(2)
+        .with_max_retries(2)
         .with_delay(0.05)
         .with_multiplier(2)
         .with_retry_on([500])
@@ -66,7 +66,7 @@ async def test_async_adaptive_retry_with_retry_after(respx_mock: respx.MockRoute
 
     adaptive_policy = (
         RetryPolicy()
-        .with_attempts(2)
+        .with_max_retries(2)
         .with_delay(0.05)
         .with_multiplier(2)
         .with_retry_on([500])
