@@ -19,7 +19,7 @@ def test_fixed_delay(respx_mock: respx.MockRouter):
         httpx.Response(200),
     ]
 
-    immediate_retry = RetryPolicy().with_attempts(3).with_delay(0.5)
+    immediate_retry = RetryPolicy().with_max_retries(3).with_delay(0.5)
 
     with httpx.Client(transport=RetryTransport(policy=immediate_retry)) as client:
         res = client.get("https://example.com")
@@ -38,7 +38,7 @@ async def test_async_fixed_delay(respx_mock: respx.MockRouter):
         httpx.Response(200),
     ]
 
-    immediate_retry = RetryPolicy().with_attempts(3).with_delay(0.5)
+    immediate_retry = RetryPolicy().with_max_retries(3).with_delay(0.5)
 
     async with httpx.AsyncClient(
         transport=AsyncRetryTransport(policy=immediate_retry)

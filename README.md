@@ -18,10 +18,10 @@ from httpx_retry import RetryTransport, RetryPolicy
 
 exponential_retry = (
     RetryPolicy()
-      .with_attempts(3)
-      .with_min_delay(100)
-      .with_multiplier(2)
-      .with_retry_on(lambda code: code >= 500)
+    .with_max_retries(3)
+    .with_min_delay(0.1)
+    .with_multiplier(2)
+    .with_retry_on(lambda status_code: status_code >= 500)
 )
 
 client = httpx.Client(transport=RetryTransport(policy=exponential_retry))

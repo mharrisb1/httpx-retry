@@ -26,7 +26,7 @@ def test_linear_backoff(respx_mock: respx.MockRouter):
         httpx.Response(200),
     ]
 
-    linear_retry = RetryPolicy().with_attempts(3).with_delay(linear_delay(0.1, 0.1))
+    linear_retry = RetryPolicy().with_max_retries(3).with_delay(linear_delay(0.1, 0.1))
 
     start = time.monotonic()
     with httpx.Client(transport=RetryTransport(policy=linear_retry)) as client:
@@ -50,7 +50,7 @@ async def test_async_linear_backoff(respx_mock: respx.MockRouter):
         httpx.Response(200),
     ]
 
-    linear_retry = RetryPolicy().with_attempts(3).with_delay(linear_delay(0.1, 0.1))
+    linear_retry = RetryPolicy().with_max_retries(3).with_delay(linear_delay(0.1, 0.1))
 
     start = time.monotonic()
     async with httpx.AsyncClient(
