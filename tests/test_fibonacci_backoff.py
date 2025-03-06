@@ -29,6 +29,7 @@ def test_fibonacci_backoff(respx_mock: respx.MockRouter):
     route.side_effect = [
         httpx.Response(500),
         httpx.Response(500),
+        httpx.Response(500),
         httpx.Response(200),
     ]
 
@@ -43,7 +44,7 @@ def test_fibonacci_backoff(respx_mock: respx.MockRouter):
     elapsed = end - start
     assert elapsed >= 0.2
 
-    assert route.call_count == 3
+    assert route.call_count == 4
 
 
 @pytest.mark.asyncio()
