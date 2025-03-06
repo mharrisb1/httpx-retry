@@ -15,7 +15,7 @@ class RetryExecutor:
     def execute(
         self, func: Callable[..., Response], *args: Any, **kwargs: Any
     ) -> Response:
-        attempt = 1
+        attempt = 0
         start_time = time.monotonic()
         last_exception: Optional[Exception] = None
 
