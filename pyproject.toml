@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "httpx-retry"
-version = "0.3.0+eol"
+version = "2025.04.23"
 description = "Middleware for implementing retry policies with HTTPX"
 authors = ["Michael Harris <mharris@definite.app>"]
 readme = "README.md"

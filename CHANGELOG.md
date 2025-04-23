@@ -1,6 +1,6 @@
 # Changelog
 
-# v0.3.0+eol
+# v2025.04.23
 
 > [!CAUTION]
 > Project has reached end of life status and will no longer be actively maintained or patched
