@@ -1,5 +1,12 @@
 # Changelog
 
+# v0.3.0+eol
+
+> [!CAUTION]
+> Project has reached end of life status and will no longer be actively maintained or patched
+
+Unifying efforts with [httpx-retries](https://github.com/will-ockmore/httpx-retries)
+
 # v0.3.0
 
 > [!WARNING]

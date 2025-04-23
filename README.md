@@ -7,6 +7,9 @@
 
 ---
 
+> [!CAUTION]
+> This project is no longer maintained as of 2025-04-23. Everyone should migrate to [httpx-retries](https://github.com/will-ockmore/httpx-retries)
+
 ## Usage
 
 Retries are defined at the transport layer.
